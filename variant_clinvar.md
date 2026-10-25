@@ -45,9 +45,9 @@ SELECT ?title ?vcv_review_status ?rcv_review_status ?interpretation ?last_evalua
 WHERE {
   VALUES ?variant { <{{variant}}> }
 
-  GRAPH <http://togovar.org/variant/annotation/clinvar> {
+  GRAPH <http://togovar.org/variant/clinvar> {
     ?variant dct:identifier ?variation_id .
-
+    FILTER REGEX(?variation_id, "^[0-9]+$")
     BIND(IRI(CONCAT("http://ncbi.nlm.nih.gov/clinvar/variation/", ?variation_id)) AS ?clinvar)
   }
 
@@ -75,5 +75,5 @@ WHERE {
     FILTER(?db IN ("MedGen"))
   }
 }
-ORDER BY ?title ?review_status ?interpretation DESC(?last_evaluated) ?condition
+ORDER BY ?title ?vcv_review_status ?rcv_review_status ?interpretation DESC(?last_evaluated) ?condition
 ```
